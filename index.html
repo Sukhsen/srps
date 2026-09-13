@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sitaram Residential Public School · Dahupatti, Saraigarh-Bhaptiyahi, Supaul</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="icon" href="images/wall-signage.jpg">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          ink:      '#0F2A28',
+          paper:    '#F4FBFA',
+          teal:     { DEFAULT:'#0E9C97', dark:'#0A6E6B', light:'#14B8B1', tint:'#E3F6F5' },
+          red:      { DEFAULT:'#D62839', dark:'#A81F2C', tint:'#FBE7E9' },
+          navy:     { DEFAULT:'#1B2A6B', dark:'#121D49', tint:'#E8EAF5' },
+          gold:     { DEFAULT:'#C9A227', dark:'#9C7D1D', tint:'#F8F0D8' },
+          magenta:  { DEFAULT:'#D6247E', tint:'#FBE4F0' },
+        },
+        fontFamily: {
+          display: ['Fraunces','serif'],
+          body: ['Manrope','sans-serif'],
+        },
+      }
+    }
+  }
+</script>
+<style>
+  html { scroll-behavior: smooth; }
+  body { font-family:'Manrope',sans-serif; background:#F4FBFA; color:#0F2A28; }
+  .font-display { font-family:'Fraunces','serif'; font-optical-sizing:auto; }
+  .scrollbar-hide { -ms-overflow-style:none; scrollbar-width:none; }
+  .scrollbar-hide::-webkit-scrollbar { display:none; }
+
+  /* ---------- 3D touches ---------- */
+  .stage { perspective: 1400px; }
+
+  .tilt-card {
+    transform: rotateY(-7deg) rotateX(3deg) translateZ(0);
+    transform-style: preserve-3d;
+    box-shadow:
+      28px 34px 0 -6px rgba(27,42,107,0.10),
+      44px 54px 60px -20px rgba(15,42,40,0.45);
+    transition: transform .5s ease;
+  }
+  .tilt-card:hover { transform: rotateY(-3deg) rotateX(1deg) translateZ(10px); }
+
+  .pop-3d {
+    box-shadow: 0 1px 0 rgba(15,42,40,0.04), 0 14px 30px -12px rgba(15,42,40,0.28);
+    transform: translateZ(0);
+    transition: transform .35s ease, box-shadow .35s ease;
+  }
+  .pop-3d:hover {
+    transform: translateY(-6px) rotateX(3deg);
+    box-shadow: 0 24px 40px -16px rgba(15,42,40,0.35);
+  }
+
+  .flip-card { perspective: 1200px; height: 100%; }
+  .flip-inner {
+    position: relative; width:100%; height:100%; min-height: 220px;
+    transform-style: preserve-3d;
+    transition: transform .7s cubic-bezier(.2,.8,.2,1);
+  }
+  .flip-card:hover .flip-inner,
+  .flip-card:focus-within .flip-inner { transform: rotateY(180deg); }
+  .flip-face {
+    position:absolute; inset:0; backface-visibility:hidden;
+    border-radius:1rem; padding:1.5rem;
+  }
+  .flip-back { transform: rotateY(180deg); }
+
+  .emblem-3d {
+    box-shadow:
+      0 2px 0 rgba(255,255,255,0.5) inset,
+      0 -3px 6px rgba(0,0,0,0.15) inset,
+      0 10px 18px -6px rgba(15,42,40,0.5);
+    transition: transform .4s ease;
+  }
+  .emblem-3d:hover { transform: rotateY(20deg) rotateX(-6deg); }
+
+  .badge-float { animation: floatY 5.5s ease-in-out infinite; }
+  @keyframes floatY { 0%,100%{ transform:translateY(0px) rotate(-2deg);} 50%{ transform:translateY(-9px) rotate(2deg);} }
+
+  .layer-shadow { box-shadow: 0 30px 60px -20px rgba(15,42,40,0.35), 0 10px 20px -10px rgba(15,42,40,0.25); }
+
+  .ruled-bg {
+    background-image: repeating-linear-gradient(0deg, rgba(255,255,255,0.05) 0px, rgba(255,255,255,0.05) 1px, transparent 1px, transparent 34px);
+  }
+  .dot-bg {
+    background-image: radial-gradient(rgba(255,255,255,0.16) 1.4px, transparent 1.4px);
+    background-size: 22px 22px;
+  }
+
+  .nav-link { position:relative; }
+  .nav-link.active { color:#0A6E6B; }
+  .nav-link.active::after {
+    content:'';
+    position:absolute; left:0; right:0; bottom:-11px;
+    height:3px; border-radius:2px;
+    background: linear-gradient(90deg,#0E9C97,#D62839);
+  }
+
+  .placeholder-tile {
+    background:
+      linear-gradient(135deg, rgba(14,156,151,0.10), rgba(214,40,57,0.10)),
+      repeating-linear-gradient(45deg, rgba(27,42,107,0.05) 0 10px, rgba(27,42,107,0.02) 10px 20px);
+  }
+  .photo-slot { position:relative; overflow:hidden; }
+  .photo-slot img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+  .photo-slot .hint { position:relative; z-index:0; }
+
+  .hand { display:inline-flex; transform: scaleX(-1); }
+
+  :focus-visible { outline:2px solid #C9A227; outline-offset:2px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .badge-float, html { animation:none !important; scroll-behavior:auto !important; }
+    .tilt-card, .flip-inner, .pop-3d { transition:none !important; }
+  }
+</style>
+</head>
+<body class="antialiased">
+
+<!-- ============ HEADER : STACKED, NON-COLLAPSING ============ -->
+<header class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-teal/10 shadow-[0_1px_0_rgba(14,156,151,0.08)]">
+
+  <!-- ROW 1 : BRANDING -->
+  <div class="max-w-6xl mx-auto px-4 sm:px-6">
+    <div class="flex items-center gap-3 py-2.5">
+      <div class="emblem-3d w-12 h-12 shrink-0 rounded-full bg-gradient-to-br from-teal to-teal-dark border-2 border-red flex items-center justify-center">
+        <span class="font-display text-white font-bold text-sm">SRPS</span>
+      </div>
+      <div class="min-w-0">
+        <p class="font-display text-[16px] sm:text-lg font-semibold text-navy leading-tight truncate">Sitaram Residential Public School</p>
+        <p class="text-[11px] sm:text-xs tracking-[0.14em] uppercase text-ink/50 font-medium">Dahupatti &middot; Saraigarh-Bhaptiyahi &middot; Supaul</p>
+      </div>
+      <a href="tel:7564980780" class="ml-auto hidden md:flex items-center gap-2 text-sm font-semibold text-teal-dark hover:text-red transition-colors shrink-0">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        75649 80780
+      </a>
+    </div>
+  </div>
+
+  <!-- ROW 2 : NAVIGATION — horizontally scrollable, no hamburger, ever -->
+  <nav class="border-t border-teal/10 bg-white">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="flex md:justify-center items-center gap-6 md:gap-9 overflow-x-auto whitespace-nowrap scrollbar-hide py-3 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <a href="#home" class="nav-link active shrink-0 text-[13.5px] font-semibold text-ink/70 hover:text-teal-dark transition-colors">Home</a>
+        <a href="#about" class="nav-link shrink-0 text-[13.5px] font-semibold text-ink/70 hover:text-teal-dark transition-colors">About</a>
+        <a href="#values" class="nav-link shrink-0 text-[13.5px] font-semibold text-ink/70 hover:text-teal-dark transition-colors">Academics</a>
+        <a href="#faculty" class="nav-link shrink-0 text-[13.5px] font-semibold text-ink/70 hover:text-teal-dark transition-colors">Faculty</a>
+        <a href="#fees" class="nav-link shrink-0 text-[13.5px] font-semibold text-ink/70 hover:text-teal-dark transition-colors">Fees</a>
+        <a href="#gallery" class="nav-link shrink-0 text-[13.5px] font-semibold text-ink/70 hover:text-teal-dark transition-colors">Gallery</a>
+        <a href="#admissions" class="nav-link shrink-0 text-[13.5px] font-semibold text-ink/70 hover:text-teal-dark transition-colors">Admissions</a>
+        <a href="#contact" class="nav-link shrink-0 text-[13.5px] font-semibold text-ink/70 hover:text-teal-dark transition-colors">Contact</a>
+        <a href="#admissions" class="shrink-0 order-last ml-2 inline-flex items-center gap-1.5 rounded-full bg-red text-white text-xs font-bold px-4 py-2 shadow-sm hover:bg-red-dark transition-colors">
+          <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+          Admission Open
+        </a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<!-- ============ HERO ============ -->
+<section id="home" class="relative overflow-hidden bg-navy text-white">
+  <div class="absolute inset-0 bg-gradient-to-br from-navy via-navy-dark to-[#0A1230]"></div>
+  <div class="absolute inset-0 dot-bg opacity-40"></div>
+  <div class="absolute -right-24 -top-24 w-96 h-96 rounded-full bg-teal/20 blur-3xl"></div>
+  <div class="absolute -left-20 bottom-0 w-72 h-72 rounded-full bg-red/15 blur-3xl"></div>
+
+  <div class="relative max-w-6xl mx-auto px-4 sm:px-6 pt-16 pb-24 sm:pt-20 sm:pb-32">
+    <div class="grid lg:grid-cols-2 gap-14 items-center">
+      <div>
+        <span class="inline-flex items-center gap-2 text-[11px] font-bold tracking-[0.18em] uppercase text-gold bg-white/5 border border-gold/30 rounded-full px-3.5 py-1.5">
+          Est. 2015 &middot; Bihar Govt. Recognized
+        </span>
+        <h1 class="font-display text-4xl sm:text-5xl leading-[1.1] font-semibold mt-6">
+          The Roots of Learning Run Deep, and the Fruit Is Always Sweet.
+        </h1>
+        <p class="mt-5 text-white/75 text-base sm:text-lg leading-relaxed max-w-xl">
+          Sitaram Residential Public School believes knowledge is the strongest tool a child can carry into the world &mdash; nurtured here, in a residential campus at Dahupatti, from Nursery to Class 8.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-3.5">
+          <a href="#admissions" class="inline-flex items-center gap-2 rounded-md bg-red hover:bg-red-dark text-white font-bold text-sm px-6 py-3.5 transition-colors shadow-lg shadow-black/20">
+            Apply for Admission
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+          <a href="#about" class="inline-flex items-center gap-2 rounded-md border border-white/25 hover:border-white/50 text-white font-bold text-sm px-6 py-3.5 transition-colors">
+            About the School
+          </a>
+        </div>
+      </div>
+
+      <!-- 3D tilted photo card of the real campus -->
+      <div class="stage hidden lg:flex justify-center">
+        <div class="tilt-card photo-slot w-full max-w-sm aspect-[4/5] rounded-2xl border-4 border-white/10">
+          <img src="images/building.jpg" alt="Sitaram Residential Public School campus building" onerror="this.remove()">
+          <div class="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur rounded-xl px-4 py-3 shadow-lg badge-float">
+            <p class="font-display text-sm font-semibold text-navy">Our Campus</p>
+            <p class="text-[11px] text-ink/60">Dahupatti, Supaul</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats banner -->
+  <div class="relative max-w-6xl mx-auto px-4 sm:px-6 pb-14 sm:pb-0 sm:translate-y-1/2">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3.5 sm:gap-5 bg-white rounded-2xl layer-shadow p-4 sm:p-6 border border-teal/5">
+      <div class="pop-3d rounded-xl text-center sm:text-left px-2 py-3">
+        <p class="font-display text-3xl sm:text-4xl font-semibold text-teal-dark">2015</p>
+        <p class="text-xs sm:text-[13px] text-ink/55 font-semibold mt-1">Year Established</p>
+      </div>
+      <div class="pop-3d rounded-xl text-center sm:text-left px-2 py-3">
+        <p class="font-display text-3xl sm:text-4xl font-semibold text-teal-dark">Nur&ndash;8</p>
+        <p class="text-xs sm:text-[13px] text-ink/55 font-semibold mt-1">Classes Offered</p>
+      </div>
+      <div class="pop-3d rounded-xl text-center sm:text-left px-2 py-3">
+        <p class="font-display text-3xl sm:text-4xl font-semibold text-teal-dark">Awasiya</p>
+        <p class="text-xs sm:text-[13px] text-ink/55 font-semibold mt-1">Residential Campus</p>
+      </div>
+      <div class="pop-3d rounded-xl text-center sm:text-left px-2 py-3">
+        <p class="font-display text-3xl sm:text-4xl font-semibold text-teal-dark">15+</p>
+        <p class="text-xs sm:text-[13px] text-ink/55 font-semibold mt-1">Teaching Staff</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section id="about" class="max-w-6xl mx-auto px-4 sm:px-6 pt-24 sm:pt-40 pb-20">
+  <div class="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
+    <div class="stage order-2 md:order-1">
+      <div class="tilt-card photo-slot rounded-2xl border-4 border-white aspect-[4/3]" style="transform: rotateY(7deg) rotateX(3deg);">
+        <img src="images/wall-signage.jpg" alt="Sitaram Residential Public School entrance signage" onerror="this.remove()">
+      </div>
+    </div>
+
+    <div class="order-1 md:order-2">
+      <span class="text-[11px] font-bold tracking-[0.18em] uppercase text-red">Welcome to SRPS</span>
+      <h2 class="font-display text-3xl sm:text-[2.6rem] font-semibold text-navy leading-[1.12] mt-3">
+        A Home for Learning, Not Just a School.
+      </h2>
+      <p class="text-ink/60 mt-4 leading-relaxed">
+        Run by the Sitaram Educational &amp; Public Welfare Trust, our residential campus at Dahupatti gives children a structured, caring routine from Nursery through Class 8 &mdash; recognized by the Government of Bihar.
+      </p>
+      <div class="mt-6 grid grid-cols-2 gap-4 text-sm">
+        <div class="pop-3d bg-white rounded-xl border border-teal/10 px-4 py-3">
+          <p class="text-[10px] font-bold uppercase tracking-wide text-teal-dark">Principal</p>
+          <p class="font-semibold text-navy mt-0.5">Yogdhar Kumar</p>
+        </div>
+        <div class="pop-3d bg-white rounded-xl border border-teal/10 px-4 py-3">
+          <p class="text-[10px] font-bold uppercase tracking-wide text-teal-dark">Administrator</p>
+          <p class="font-semibold text-navy mt-0.5">Gita Kumari Mehta</p>
+        </div>
+      </div>
+      <ul class="mt-7 grid sm:grid-cols-2 gap-x-6 gap-y-4">
+        <li class="flex items-start gap-2.5">
+          <span class="mt-0.5 w-5 h-5 rounded-full bg-teal-tint text-teal-dark flex items-center justify-center shrink-0">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
+          </span>
+          <span class="text-sm font-semibold text-ink/80">Residential (Awasiya) Facility</span>
+        </li>
+        <li class="flex items-start gap-2.5">
+          <span class="mt-0.5 w-5 h-5 rounded-full bg-teal-tint text-teal-dark flex items-center justify-center shrink-0">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
+          </span>
+          <span class="text-sm font-semibold text-ink/80">Bihar Govt. Recognized</span>
+        </li>
+        <li class="flex items-start gap-2.5">
+          <span class="mt-0.5 w-5 h-5 rounded-full bg-teal-tint text-teal-dark flex items-center justify-center shrink-0">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
+          </span>
+          <span class="text-sm font-semibold text-ink/80">Nursery to Class 8</span>
+        </li>
+        <li class="flex items-start gap-2.5">
+          <span class="mt-0.5 w-5 h-5 rounded-full bg-teal-tint text-teal-dark flex items-center justify-center shrink-0">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
+          </span>
+          <span class="text-sm font-semibold text-ink/80">Computer Classes</span>
+        </li>
+        <li class="flex items-start gap-2.5">
+          <span class="mt-0.5 w-5 h-5 rounded-full bg-teal-tint text-teal-dark flex items-center justify-center shrink-0">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
+          </span>
+          <span class="text-sm font-semibold text-ink/80">Navodaya &amp; Competition Coaching</span>
+        </li>
+        <li class="flex items-start gap-2.5">
+          <span class="mt-0.5 w-5 h-5 rounded-full bg-teal-tint text-teal-dark flex items-center justify-center shrink-0">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
+          </span>
+          <span class="text-sm font-semibold text-ink/80">Trust-Run Institution</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GUIDING VALUES — 3D FLIP CARDS ============ -->
+<section id="values" class="bg-teal-tint/50 border-y border-teal/10">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 py-20">
+    <div class="max-w-xl mx-auto text-center">
+      <span class="text-[11px] font-bold tracking-[0.18em] uppercase text-red">What We Believe</span>
+      <h2 class="font-display text-3xl sm:text-4xl font-semibold text-navy mt-3">Our Guiding Values</h2>
+      <p class="text-ink/55 text-sm mt-2">Hover a card to see how we bring it to life.</p>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-12">
+      <div class="flip-card">
+        <div class="flip-inner">
+          <div class="flip-face bg-white border border-teal/10 shadow-sm flex flex-col items-center justify-center text-center">
+            <div class="w-12 h-12 rounded-full bg-teal-tint text-teal-dark flex items-center justify-center mb-3">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4.5 8-11.8V5l-8-3-8 3v5.2C4 17.5 12 22 12 22z"/></svg>
+            </div>
+            <h3 class="font-display text-lg font-semibold text-navy">Patience</h3>
+          </div>
+          <div class="flip-face flip-back bg-teal-dark text-white flex flex-col items-center justify-center text-center">
+            <p class="text-sm leading-relaxed">"The roots of education are bitter, but its fruit is sweet." We give children the time and steady support that real learning needs.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flip-card">
+        <div class="flip-inner">
+          <div class="flip-face bg-white border border-teal/10 shadow-sm flex flex-col items-center justify-center text-center">
+            <div class="w-12 h-12 rounded-full bg-red/10 text-red flex items-center justify-center mb-3">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2c-2 4-6 5-6 10a6 6 0 0 0 12 0c0-5-4-6-6-10z"/></svg>
+            </div>
+            <h3 class="font-display text-lg font-semibold text-navy">Knowledge</h3>
+          </div>
+          <div class="flip-face flip-back bg-red text-white flex flex-col items-center justify-center text-center">
+            <p class="text-sm leading-relaxed">"Knowledge is the most powerful weapon you can use to change the world." Every lesson here builds that strength.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flip-card">
+        <div class="flip-inner">
+          <div class="flip-face bg-white border border-teal/10 shadow-sm flex flex-col items-center justify-center text-center">
+            <div class="w-12 h-12 rounded-full bg-navy/10 text-navy flex items-center justify-center mb-3">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 4v5"/></svg>
+            </div>
+            <h3 class="font-display text-lg font-semibold text-navy">Discipline</h3>
+          </div>
+          <div class="flip-face flip-back bg-navy text-white flex flex-col items-center justify-center text-center">
+            <p class="text-sm leading-relaxed">A residential routine builds punctuality, focus and self-reliance from the earliest years.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flip-card">
+        <div class="flip-inner">
+          <div class="flip-face bg-white border border-teal/10 shadow-sm flex flex-col items-center justify-center text-center">
+            <div class="w-12 h-12 rounded-full bg-gold-tint text-gold-dark flex items-center justify-center mb-3">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>
+            </div>
+            <h3 class="font-display text-lg font-semibold text-navy">Care</h3>
+          </div>
+          <div class="flip-face flip-back bg-gold-dark text-white flex flex-col items-center justify-center text-center">
+            <p class="text-sm leading-relaxed">Awasiya means residential &mdash; children are looked after like family, day and night.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FACULTY ============ -->
+<section id="faculty" class="max-w-6xl mx-auto px-4 sm:px-6 py-20">
+  <div class="max-w-xl mx-auto text-center mb-12">
+    <span class="text-[11px] font-bold tracking-[0.18em] uppercase text-teal-dark">Our People</span>
+    <h2 class="font-display text-3xl sm:text-4xl font-semibold text-navy mt-3">Leadership &amp; Faculty</h2>
+  </div>
+
+  <div class="grid sm:grid-cols-3 gap-5 mb-8">
+    <div class="pop-3d bg-white rounded-2xl border border-teal/10 p-6 text-center">
+      <div class="w-14 h-14 mx-auto rounded-full bg-teal-tint text-teal-dark flex items-center justify-center font-display text-xl font-semibold">YK</div>
+      <p class="font-display text-lg font-semibold text-navy mt-3">Yogdhar Kumar</p>
+      <p class="text-[11px] font-bold uppercase tracking-wide text-red mt-1">Principal</p>
+    </div>
+    <div class="pop-3d bg-white rounded-2xl border border-teal/10 p-6 text-center">
+      <div class="w-14 h-14 mx-auto rounded-full bg-red/10 text-red flex items-center justify-center font-display text-xl font-semibold">GM</div>
+      <p class="font-display text-lg font-semibold text-navy mt-3">Gita Kumari Mehta</p>
+      <p class="text-[11px] font-bold uppercase tracking-wide text-red mt-1">Director</p>
+    </div>
+    <div class="pop-3d bg-white rounded-2xl border border-teal/10 p-6 text-center">
+      <div class="w-14 h-14 mx-auto rounded-full bg-navy/10 text-navy flex items-center justify-center font-display text-xl font-semibold">PB</div>
+      <p class="font-display text-lg font-semibold text-navy mt-3">Priyanka Bharti</p>
+      <p class="text-[11px] font-bold uppercase tracking-wide text-red mt-1">Vice Principal</p>
+    </div>
+  </div>
+
+  <div class="bg-white rounded-2xl border border-teal/10 shadow-sm p-6 sm:p-8">
+    <p class="text-[11px] font-bold uppercase tracking-wide text-ink/40 mb-4">Assistant Teachers</p>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-3">
+      <div class="flex items-center gap-2.5"><span class="hand text-red">&#9756;</span><span class="text-sm font-semibold text-ink/80">Umesh Kr. Mehta</span></div>
+      <div class="flex items-center gap-2.5"><span class="hand text-red">&#9756;</span><span class="text-sm font-semibold text-ink/80">Sitaram Sharma</span></div>
+      <div class="flex items-center gap-2.5"><span class="hand text-red">&#9756;</span><span class="text-sm font-semibold text-ink/80">Panchu Pd. Mehta</span></div>
+      <div class="flex items-center gap-2.5"><span class="hand text-red">&#9756;</span><span class="text-sm font-semibold text-ink/80">Bablu Kumar</span></div>
+      <div class="flex items-center gap-2.5"><span class="hand text-red">&#9756;</span><span class="text-sm font-semibold text-ink/80">Anil Kumar</span></div>
+      <div class="flex items-center gap-2.5"><span class="hand text-red">&#9756;</span><span class="text-sm font-semibold text-ink/80">Santosh Kumar</span></div>
+      <div class="flex items-center gap-2.5"><span class="hand text-red">&#9756;</span><span class="text-sm font-semibold text-ink/80">Arjun Kumar</span></div>
+      <div class="flex items-center gap-2.5"><span class="hand text-red">&#9756;</span><span class="text-sm font-semibold text-ink/80">Rina Kumari</span></div>
+      <div class="flex items-center gap-2.5"><span class="hand text-red">&#9756;</span><span class="text-sm font-semibold text-ink/80">Bandana Kumari</span></div>
+      <div class="flex items-center gap-2.5"><span class="hand text-red">&#9756;</span><span class="text-sm font-semibold text-ink/80">Kanchan Kumari</span></div>
+      <div class="flex items-center gap-2.5"><span class="hand text-red">&#9756;</span><span class="text-sm font-semibold text-ink/80">Rakesh Kumar</span></div>
+      <div class="flex items-center gap-2.5"><span class="hand text-red">&#9756;</span><span class="text-sm font-semibold text-ink/80">Mukesh Kumar Mehta</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FEES ============ -->
+<section id="fees" class="bg-teal-tint/50 border-y border-teal/10">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 py-20">
+    <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6">
+      <div class="max-w-xl">
+        <span class="text-[11px] font-bold tracking-[0.18em] uppercase text-red">Fee Structure</span>
+        <h2 class="font-display text-3xl sm:text-4xl font-semibold text-navy mt-3">Simple, Transparent Fees.</h2>
+      </div>
+      <div class="pop-3d shrink-0 bg-navy text-white rounded-2xl px-6 py-5 text-center">
+        <p class="text-[11px] font-bold uppercase tracking-wide text-gold">Admission &amp; Registration Fee</p>
+        <p class="font-display text-3xl font-semibold mt-1.5">&#8377;4,500</p>
+        <p class="text-[11px] text-white/60 font-semibold mt-0.5">One Time</p>
+      </div>
+    </div>
+
+    <!-- Monthly fee table -->
+    <div class="mt-8 pop-3d overflow-x-auto bg-white rounded-2xl border border-teal/10">
+      <table class="w-full text-sm min-w-[420px]">
+        <thead>
+          <tr class="text-left text-[11px] font-bold uppercase tracking-wide text-ink/45 border-b border-teal/10">
+            <th class="px-6 py-4">Class</th>
+            <th class="px-6 py-4">Monthly Fee</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-teal/5">
+          <tr><td class="px-6 py-4 font-semibold text-navy">Nursery &ndash; UKG</td><td class="px-6 py-4 text-ink/60">&#8377;900</td></tr>
+          <tr><td class="px-6 py-4 font-semibold text-navy">Class 1</td><td class="px-6 py-4 text-ink/60">&#8377;1,100</td></tr>
+          <tr><td class="px-6 py-4 font-semibold text-navy">Class 2</td><td class="px-6 py-4 text-ink/60">&#8377;1,200</td></tr>
+          <tr><td class="px-6 py-4 font-semibold text-navy">Class 3</td><td class="px-6 py-4 text-ink/60">&#8377;1,300</td></tr>
+          <tr><td class="px-6 py-4 font-semibold text-navy">Class 4</td><td class="px-6 py-4 text-ink/60">&#8377;1,400</td></tr>
+          <tr><td class="px-6 py-4 font-semibold text-navy">Class 5</td><td class="px-6 py-4 text-ink/60">&#8377;1,500</td></tr>
+          <tr><td class="px-6 py-4 font-semibold text-navy">Class 6</td><td class="px-6 py-4 text-ink/60">&#8377;1,600</td></tr>
+          <tr><td class="px-6 py-4 font-semibold text-navy">Class 7</td><td class="px-6 py-4 text-ink/60">&#8377;1,600</td></tr>
+          <tr><td class="px-6 py-4 font-semibold text-navy">Class 8</td><td class="px-6 py-4 text-ink/60">&#8377;1,600</td></tr>
+          <tr><td class="px-6 py-4 font-semibold text-navy">Navodaya &amp; Competition Class</td><td class="px-6 py-4 text-ink/60">&#8377;1,700</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Additional charges -->
+    <div class="mt-6 grid sm:grid-cols-2 gap-4">
+      <div class="pop-3d bg-white rounded-2xl border border-teal/10 overflow-hidden">
+        <p class="px-6 pt-5 pb-3 text-[11px] font-bold uppercase tracking-wide text-ink/45">Computer Class (Monthly)</p>
+        <div class="divide-y divide-teal/5 text-sm">
+          <div class="flex justify-between px-6 py-3.5"><span class="font-semibold text-navy">Class 1 &ndash; 5</span><span class="text-ink/60">&#8377;300</span></div>
+          <div class="flex justify-between px-6 py-3.5"><span class="font-semibold text-navy">Class 6 &ndash; 8</span><span class="text-ink/60">&#8377;400</span></div>
+        </div>
+      </div>
+      <div class="pop-3d bg-white rounded-2xl border border-teal/10 overflow-hidden">
+        <p class="px-6 pt-5 pb-3 text-[11px] font-bold uppercase tracking-wide text-ink/45">Yearly Charges</p>
+        <div class="divide-y divide-teal/5 text-sm">
+          <div class="flex justify-between px-6 py-3.5"><span class="font-semibold text-navy">Stationary (School Diary, ID Card)</span><span class="text-ink/60">&#8377;300</span></div>
+          <div class="flex justify-between px-6 py-3.5"><span class="font-semibold text-navy">Exam Fee (Nursery &ndash; UKG)</span><span class="text-ink/60">&#8377;900</span></div>
+          <div class="flex justify-between px-6 py-3.5"><span class="font-semibold text-navy">Exam Fee (Class 1 &ndash; 5)</span><span class="text-ink/60">&#8377;1,200</span></div>
+          <div class="flex justify-between px-6 py-3.5"><span class="font-semibold text-navy">Exam Fee (Class 6 &ndash; 8)</span><span class="text-ink/60">&#8377;1,500</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GALLERY ============ -->
+<section id="gallery" class="max-w-6xl mx-auto px-4 sm:px-6 py-20">
+  <div class="flex items-end justify-between mb-8">
+    <div>
+      <span class="text-[11px] font-bold tracking-[0.18em] uppercase text-teal-dark">Campus Life</span>
+      <h2 class="font-display text-3xl sm:text-4xl font-semibold text-navy mt-3">Glimpses of SRPS</h2>
+    </div>
+    <a href="#gallery" class="text-sm font-bold text-red hover:text-red-dark transition-colors whitespace-nowrap ml-4">View gallery &rarr;</a>
+  </div>
+
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-3.5 auto-rows-[130px] sm:auto-rows-[160px]">
+    <div class="pop-3d photo-slot col-span-1 row-span-2 rounded-xl placeholder-tile border border-teal/10">
+      <img src="images/building.jpg" alt="Campus building" onerror="this.remove()">
+    </div>
+    <div class="pop-3d photo-slot col-span-1 row-span-1 rounded-xl placeholder-tile border border-teal/10">
+      <img src="images/wall-signage.jpg" alt="Entrance signage" onerror="this.remove()">
+    </div>
+    <div class="pop-3d photo-slot col-span-1 row-span-1 rounded-xl placeholder-tile border border-teal/10">
+      <img src="images/gallery-03.jpg" alt="Campus life 3" onerror="this.remove()">
+    </div>
+    <div class="pop-3d photo-slot col-span-1 row-span-2 rounded-xl placeholder-tile border border-teal/10">
+      <img src="images/gallery-04.jpg" alt="Campus life 4" onerror="this.remove()">
+    </div>
+    <div class="pop-3d photo-slot col-span-1 row-span-1 rounded-xl placeholder-tile border border-teal/10">
+      <img src="images/gallery-05.jpg" alt="Campus life 5" onerror="this.remove()">
+    </div>
+    <div class="pop-3d photo-slot col-span-1 row-span-1 rounded-xl placeholder-tile border border-teal/10">
+      <img src="images/gallery-06.jpg" alt="Campus life 6" onerror="this.remove()">
+    </div>
+    <div class="pop-3d photo-slot col-span-2 md:col-span-1 row-span-1 rounded-xl placeholder-tile border border-teal/10">
+      <img src="images/gallery-07.jpg" alt="Campus life 7" onerror="this.remove()">
+    </div>
+    <div class="pop-3d photo-slot col-span-2 md:col-span-1 row-span-1 rounded-xl placeholder-tile border border-teal/10">
+      <img src="images/gallery-08.jpg" alt="Campus life 8" onerror="this.remove()">
+    </div>
+  </div>
+  <p class="text-xs text-ink/40 mt-4">Two tiles already show your real campus photos &mdash; drop more files into <code class="bg-ink/5 px-1.5 py-0.5 rounded">images/</code> named <code class="bg-ink/5 px-1.5 py-0.5 rounded">gallery-03.jpg</code> through <code class="bg-ink/5 px-1.5 py-0.5 rounded">gallery-08.jpg</code> to fill the rest.</p>
+</section>
+
+<!-- ============ ADMISSIONS CTA STRIP ============ -->
+<section id="admissions" class="relative overflow-hidden bg-red text-white ruled-bg">
+  <div class="absolute inset-0 bg-gradient-to-r from-red-dark via-red to-red-dark opacity-95"></div>
+  <div class="relative max-w-6xl mx-auto px-4 sm:px-6 py-14 sm:py-16 flex flex-col md:flex-row items-center md:items-center justify-between gap-8 text-center md:text-left">
+    <div class="max-w-lg">
+      <span class="inline-block text-[11px] font-bold tracking-[0.18em] uppercase text-gold-tint bg-white/10 rounded-full px-3.5 py-1.5">Limited Seats</span>
+      <h2 class="font-display text-2xl sm:text-3xl font-semibold mt-4 leading-tight">Admissions for Session 2026&ndash;27 are now open.</h2>
+      <p class="text-white/70 text-sm mt-2">Call our admissions desk to book a campus visit or begin the application.</p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-3 shrink-0">
+      <a href="tel:7564980780" class="inline-flex items-center justify-center gap-2 rounded-md bg-white text-red-dark font-bold text-sm px-6 py-3.5 hover:bg-gold-tint transition-colors">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        Call 75649 80780
+      </a>
+      <a href="tel:9199261135" class="inline-flex items-center justify-center gap-2 rounded-md border border-white/40 hover:bg-white/10 text-white font-bold text-sm px-6 py-3.5 transition-colors">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        Call 91992 61135
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section id="contact" class="max-w-6xl mx-auto px-4 sm:px-6 py-20">
+  <div class="grid md:grid-cols-2 gap-10 items-start">
+    <div>
+      <span class="text-[11px] font-bold tracking-[0.18em] uppercase text-red">Get in Touch</span>
+      <h2 class="font-display text-3xl sm:text-4xl font-semibold text-navy mt-3">Visit or write to us.</h2>
+      <div class="mt-6 space-y-4 text-sm text-ink/65">
+        <p class="flex gap-3"><svg class="shrink-0 mt-0.5" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9A227" stroke-width="1.8"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Sitaram Residential Public School, Dahupatti, Saraigarh-Bhaptiyahi, Supaul, Bihar</p>
+        <p class="flex gap-3"><svg class="shrink-0 mt-0.5" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9A227" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg> 75649 80780 &middot; 91992 61135</p>
+        <p class="flex gap-3"><svg class="shrink-0 mt-0.5" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9A227" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg> srpsdahupatti@gmail.com <span class="text-ink/35 italic"></span></p>
+      </div>
+    </div>
+    <div class="pop-3d aspect-video rounded-2xl overflow-hidden border border-teal/10 bg-teal-tint/40">
+      <iframe
+        title="Sitaram Residential Public School location map"
+        src="https://www.google.com/maps?q=Saraigarh-Bhaptiyahi,Supaul,Bihar&output=embed"
+        class="w-full h-full border-0"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="bg-navy-dark text-white">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 pt-16 pb-10">
+    <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-10">
+      <div>
+        <div class="flex items-center gap-2.5">
+          <div class="w-10 h-10 rounded-full bg-gradient-to-br from-teal to-teal-dark border-2 border-red flex items-center justify-center">
+            <span class="font-display text-white font-bold text-[10px]">SRPS</span>
+          </div>
+          <p class="font-display font-semibold text-base">Sitaram Residential<br>Public School</p>
+        </div>
+        <p class="text-white/50 text-sm mt-4 leading-relaxed">Where the roots of learning run deep, and the fruit is always sweet.</p>
+      </div>
+      <div>
+        <p class="text-xs font-bold uppercase tracking-wide text-gold-tint">Address</p>
+        <p class="text-white/60 text-sm mt-4 leading-relaxed">Sitaram Residential Public School<br>Dahupatti, Saraigarh-Bhaptiyahi<br>Supaul, Bihar</p>
+      </div>
+      <div>
+        <p class="text-xs font-bold uppercase tracking-wide text-gold-tint">Contact</p>
+        <p class="text-white/60 text-sm mt-4 leading-relaxed">
+          75649 80780<br>
+          91992 61135<br>
+          srpsdahupatti@gmail.com
+        </p>
+      </div>
+      <div>
+        <p class="text-xs font-bold uppercase tracking-wide text-gold-tint">Quick Links</p>
+        <ul class="text-white/60 text-sm mt-4 space-y-2.5">
+          <li><a href="#about" class="hover:text-white transition-colors">About the School</a></li>
+          <li><a href="#faculty" class="hover:text-white transition-colors">Faculty</a></li>
+          <li><a href="#fees" class="hover:text-white transition-colors">Fee Structure</a></li>
+          <li><a href="#admissions" class="hover:text-white transition-colors">Admissions</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="border-t border-white/10 mt-12 pt-6 flex flex-col sm:flex-row gap-3 items-center justify-between text-center sm:text-left">
+      <p class="text-white/40 text-xs">&copy; 2026 Sitaram Residential Public School. All rights reserved.</p>
+      <p class="text-white/40 text-xs">Regd. No. 20811062021925200328 &middot; P.S.S.097/17 &middot; UDISE 10060901505</p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
